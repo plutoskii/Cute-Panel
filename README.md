@@ -1,133 +1,150 @@
-# Autonomous AI Agent
+<div align="center"> <a name="readme-top"></a>
 
-This project aims to create an autonomous AI-driven agent that can manage social media accounts (starting with Twitter), interact with users, remember context, handle tasks like sending tips (cryptocurrency microtransactions), and more—all with minimal human intervention. The long-term vision is to expand beyond Twitter to multiple social media platforms.
+![Panels Banner][Panels-Framework-Banner]
 
-We're building this in **TypeScript** for type safety, extensive ecosystem support, and rapid development capabilities.
+[![TEN Releases]( https://img.shields.io/github/v/release/ten-framework/ten-framework?color=369eff&labelColor=gray&logo=github&style=flat-square )](https://github.com/TEN-framework/ten-framework/releases)
+[![](https://img.shields.io/github/release-date/ten-framework/ten-framework?labelColor=gray&style=flat-square)](https://github.com/TEN-framework/ten-framework/releases)
+[![Discussion posts](https://img.shields.io/github/discussions/TEN-framework/ten_framework?labelColor=gray&color=%20%23f79009)](https://github.com/TEN-framework/ten-framework/discussions/)
+[![Commits](https://img.shields.io/github/commit-activity/m/TEN-framework/ten_framework?labelColor=gray&color=pink)](https://github.com/TEN-framework/ten-framework/graphs/commit-activity)
+[![Issues closed](https://img.shields.io/github/issues-search?query=repo%3ATEN-framework%2Ften-framework%20is%3Aclosed&label=issues%20closed&labelColor=gray&color=green)](https://github.com/TEN-framework/ten-framework/issues)
+[![](https://img.shields.io/github/contributors/ten-framework/ten-framework?color=c4f042&labelColor=gray&style=flat-square)](https://github.com/TEN-framework/ten-framework/graphs/contributors)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome!-brightgreen.svg?style=flat-square)](https://github.com/TEN-framework/ten-framework/pulls)
+[![GitHub license](https://img.shields.io/badge/License-Apache_2.0_with_certain_conditions-blue.svg?labelColor=%20%23155EEF&color=%20%23528bff)](https://github.com/TEN-framework/ten_framework/blob/main/LICENSE)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/TEN-framework/TEN-framework)
 
+[![GitHub watchers](https://img.shields.io/github/watchers/TEN-framework/ten_framework?style=social&label=Watch)](https://GitHub.com/TEN-framework/ten_framework/watchers/?WT.mc_id=academic-105485-koreyst)
+[![GitHub forks](https://img.shields.io/github/forks/TEN-framework/ten_framework?style=social&label=Fork)](https://GitHub.com/TEN-framework/ten_framework/network/?WT.mc_id=academic-105485-koreyst)
+[![GitHub stars](https://img.shields.io/github/stars/TEN-framework/ten_framework?style=social&label=Star)](https://GitHub.com/TEN-framework/ten_framework/stargazers/?WT.mc_id=academic-105485-koreyst)
 
-## Project Goals
+<a href="https://github.com/TEN-framework/ten-framework/blob/main/README.md"><img alt="README in English" src="https://img.shields.io/badge/English-lightgrey"></a>
+<a href="https://github.com/TEN-framework/ten-framework/blob/main/docs/README-CN.md"><img alt="简体中文操作指南" src="https://img.shields.io/badge/简体中文-lightgrey"></a>
+<a href="https://github.com/TEN-framework/ten-framework/blob/main/docs/README-JP.md"><img alt="日本語のREADME" src="https://img.shields.io/badge/日本語-lightgrey"></a>
+<a href="https://github.com/TEN-framework/ten-framework/blob/main/docs/README-KR.md"><img alt="README in 한국어" src="https://img.shields.io/badge/한국어-lightgrey"></a>
+<a href="https://github.com/TEN-framework/ten-framework/blob/main/docs/README-ES.md"><img alt="README en Español" src="https://img.shields.io/badge/Español-lightgrey"></a>
+<a href="https://github.com/TEN-framework/ten-framework/blob/main/docs/README-FR.md"><img alt="README en Français" src="https://img.shields.io/badge/Français-lightgrey"></a>
+<a href="https://github.com/TEN-framework/ten-framework/blob/main/docs/README-IT.md"><img alt="README in Italiano" src="https://img.shields.io/badge/Italiano-lightgrey"></a>
 
-1. **Autonomous Social Media Management**  
-   The agent should:
-   - Read mentions, replies, and direct messages
-   - Generate and publish tweets autonomously using integrated LLMs (e.g., Claude API)
-   - Maintain a rolling memory and conversational context
-   - Monitor specific topics and hashtags (e.g., $BTB)
-   - Engage with community through likes and replies
-   
-2. **Cryptocurrency Tipping and Transactions**  
-   The agent can:
-   - Generate and securely store a wallet address and private keys
-   - Send small crypto tips to users who meet certain criteria
-   - Interact with blockchain APIs using ethers.js
-   - Track transaction history and user interactions
-   - Implement secure key management and encryption
-   
-3. **Scalable and Extensible Architecture**  
-   Our code aims to:
-   - Be easily extensible to other social media platforms
-   - Allow integration with various LLM providers and conversation strategies
-   - Encourage community contributions and improvements
-   - Support multiple blockchain networks and token standards
+[Official Site](https://theten.ai)
+•
+[Documentation](https://theten.ai/docs/ten_agent/overview)
+•
+[Blog](https://theten.ai/blog)
 
-## Key Features
+</div>
 
-- **TypeScript Backend:**  
-  - Strong type system for enhanced code reliability
-  - Modern async/await patterns for efficient I/O operations
-  - Rich ecosystem of NPM packages
-  - Easy integration with Node.js
-  
-- **LLM Integration (Claude):**  
-  - Use language model APIs for natural language understanding and generation
-  - Context-aware responses with conversation history
-  - Custom prompt engineering for specific use cases
-  - Fallback mechanisms for API failures
+# Cute Panel
 
-- **Secure Storage of Keys and State:**  
-  - Environment-based configuration using dotenv
-  - Private keys and secrets are never hardcoded
-  - Secure key management practices
-  - Regular state persistence
+**Cute Panel** is an autonomous AI system designed to manage and interact on social media—starting with Twitter—with minimal human input. It can post, reply, track ongoing conversations, and handle microtransactions using cryptocurrency. The long-term aim is to expand support across platforms and improve how automated accounts engage with real communities.
 
-- **Event-Driven Architecture:**  
-  - Periodically fetch mentions from Twitter
-  - Process each event through the LLM for intelligent responses
-  - Rate limiting and exponential backoff
-  - Error handling and retry mechanisms
+The project is developed in **TypeScript** for its reliability, strong typing, and compatibility with modern tooling.
 
-- **Compliance and Safety Controls:**  
-  - Guardrails at the prompt and code level
-  - Content filtering and moderation
-  - Rate limiting and anti-spam measures
-  - Audit logging for all operations
+---
 
-## Project Status
+## Overview
 
-- **Current Implementation:**  
-  Features implemented:
-  - Twitter API integration using twitter-api-v2
-  - Claude API integration for LLM capabilities
-  - Ethereum wallet management with ethers.js
-  - State management and conversation tracking
-  - Rate limiting and error handling
-  
-- **Contributions Needed:**  
-  Priority areas:
-  - Enhanced conversation strategies
-  - Additional social media platform integrations
-  - Improved security measures
-  - Testing and documentation
-  - UI/UX for monitoring and configuration
+Cute Panel is built to act as a self-sufficient agent with three main responsibilities:
 
-## Getting Started
+### 1. Social Media Automation  
+The agent can:
+- Monitor Twitter mentions, replies, and DMs  
+- Post original tweets based on prompt-driven logic  
+- Reply with context-aware responses using an integrated LLM (Claude)  
+- Track hashtags and topics of interest (e.g., $BTB)  
+- Engage with users through replies, likes, and threads  
 
-### Prerequisites
+### 2. Cryptocurrency Interaction  
+The bot supports basic on-chain actions:
+- Creates and manages an Ethereum wallet  
+- Sends small crypto tips under defined rules  
+- Interfaces with blockchain APIs via `ethers.js`  
+- Logs transaction history and recipient data  
+- Keeps keys and sensitive data encrypted and isolated  
 
-- **Node.js and npm:**  
-  - Node.js (v16 or later) from [https://nodejs.org/](https://nodejs.org/)
-  - Required packages listed in `package.json`
+> While we're launching this alongside the $PANEL token on Solana, the current implementation is Ethereum-based and platform-agnostic.
 
-- **Twitter Developer Account:**  
-  Required credentials:
-  - API Key and Secret
-  - Access Token and Secret
-  - App permissions for read/write access
+### 3. Scalable Architecture  
+The codebase is structured for adaptability:
+- Supports multiple LLM providers and prompt configurations  
+- Easily extendable to additional platforms  
+- Designed for external contributions and modular development  
+- Can integrate with multiple chains and token types
 
-- **Claude API Key:**  
-  - Claude API key from [Anthropic](https://www.anthropic.com/)
-  - Rate limits and usage quotas consideration
+---
 
+## Features
+
+- **TypeScript Backend**  
+  Built with modern async patterns, type safety, and full access to the npm ecosystem.
+
+- **LLM Integration**  
+  Utilizes Claude API to handle message generation, with support for context tracking and prompt customization.
+
+- **Secure Key Management**  
+  - All sensitive information is stored via environment variables  
+  - Private keys are never exposed in the codebase  
+  - Basic encryption and access control included  
+
+- **Event-Driven Workflow**  
+  - Polls for new Twitter events on an interval  
+  - Processes each item through a decision engine  
+  - Implements retries, backoff strategies, and rate-limit handling  
+
+- **Safety & Moderation**  
+  - Prompt filters and response checks to avoid inappropriate output  
+  - Basic anti-spam logic  
+  - Activity logging for transparency and debugging
+
+---
 
 ## Project Structure
 
 ```
 src/
-├── index.ts              # Main application entry point
-├── services/            # Core services
-│   ├── TwitterApi.ts    # Twitter API integration
-│   ├── LLMClient.ts     # Claude API integration
-│   └── WalletManager.ts # Ethereum wallet management
-└── types/              # TypeScript type definitions
-    └── index.ts        # Shared types and interfaces
+├── index.ts              # Entry point
+├── services/             # Core logic modules
+│   ├── TwitterApi.ts     # Twitter integration
+│   ├── LLMClient.ts      # Language model integration
+│   └── WalletManager.ts  # Wallet and transaction handling
+└── types/                # Shared TypeScript types
+    └── index.ts
 ```
 
-## Configuration
+---
 
-The application uses environment variables for configuration:
+## Setup
 
-- `TWITTER_API_KEY` - Twitter API key
-- `TWITTER_API_SECRET` - Twitter API secret
-- `TWITTER_ACCESS_TOKEN` - Twitter access token
-- `TWITTER_ACCESS_TOKEN_SECRET` - Twitter access token secret
-- `CLAUDE_API_KEY` - Claude API key
-- `WALLET_PRIVATE_KEY` - Ethereum wallet private key
-- `ETH_RPC_URL` - Ethereum RPC URL
+### Requirements
 
-## Contributing
+- Node.js v16+  
+- Twitter Developer credentials  
+- Claude API key  
+- Ethereum-compatible RPC endpoint  
+- Optional: Existing wallet private key
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+### Configuration
+
+Create a `.env` file with the following:
+
+```
+TWITTER_API_KEY=
+TWITTER_API_SECRET=
+TWITTER_ACCESS_TOKEN=
+TWITTER_ACCESS_TOKEN_SECRET=
+
+CLAUDE_API_KEY=
+
+WALLET_PRIVATE_KEY=
+ETH_RPC_URL=
+```
+
+---
+
+## Contribution
+
+We're actively developing this project and open to contributions. If you're interested in helping with platform expansion, better language strategies, or UI tooling, feel free to open an issue or PR. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+---
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for more details.

@@ -31,7 +31,7 @@
 
 <br>
 
-## 👋 Welcome to Cute Panel
+## ⚪ Welcome to Cute Panel
 
 **Cute Panel** is an autonomous AI system designed to manage and interact on social media—starting with Twitter—with minimal human input. It can post, reply, track ongoing conversations, and handle microtransactions using cryptocurrency. The long-term aim is to expand support across platforms and improve how automated accounts engage with real communities.
 

@@ -1,6 +1,6 @@
 <div align="center"> <a name="readme-top"></a>
 
-![Cute-Panel-Banner]()
+![Cute-Panel-Banner](https://i.imgur.com/meFmf2U.png)
 
 
 <br>
@@ -105,7 +105,7 @@ The codebase is structured for adaptability:
 
 
 <div style="width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
-  <img src="" alt="Architecture Diagram" style="width: 80%;">
+  <img src="https://i.imgur.com/g64Pbyp.png" alt="Architecture Diagram" style="width: 80%;">
   <br><br>
   <p><em>This diagram illustrates the data flow between the API gateway, microservices, and the database layer.</em></p>
 </div>

@@ -62,11 +62,11 @@ The project is developed in **TypeScript** for its reliability, strong typing, a
 
 <br>
 
-> \[!IMPORTANT]
+> \[!HOWDY]
 >
 > **Star Cute-Panel Repositories** ⭐️
 >
-> Get instant notifications for new releases and updates. Your support helps us grow and improve TEN!
+> Get instant notifications for new releases and updates. Your support helps us scale and improve Cute-Panel!
 
 <br>
 

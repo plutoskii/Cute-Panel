@@ -82,7 +82,7 @@ The agent can:
 - Track hashtags and topics of interest (e.g., $BTB)  
 - Engage with users through replies, likes, and threads
 
-![Diagram](https://raw.githubusercontent.com/KatriaDopex/Cute-Panel/refs/heads/main/github-panels-diagram2-2x.png)
+![Diagram]()
 
 ### 2. Cryptocurrency Interaction  
 The bot supports basic on-chain actions:

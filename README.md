@@ -80,7 +80,9 @@ The agent can:
 - Post original tweets based on prompt-driven logic  
 - Reply with context-aware responses using an integrated LLM (Claude)  
 - Track hashtags and topics of interest (e.g., $BTB)  
-- Engage with users through replies, likes, and threads  
+- Engage with users through replies, likes, and threads
+
+![Diagram](https://raw.githubusercontent.com/KatriaDopex/Cute-Panel/refs/heads/main/github-panels-diagram2-2x.png)
 
 ### 2. Cryptocurrency Interaction  
 The bot supports basic on-chain actions:

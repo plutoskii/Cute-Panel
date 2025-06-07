@@ -1,6 +1,6 @@
 <div align="center"> <a name="readme-top"></a>
 
-![9d4dd0f4-c890-4855-8730-471303711523]()
+![Cute-Panel-Banner]()
 
 
 <br>

@@ -105,14 +105,13 @@ The codebase is structured for adaptability:
 
 <h2>Architecture Diagram</h2>
 
-<br>
 
 <div style="text-align: center;">
   <img src="https://raw.githubusercontent.com/KatriaDopex/Cute-Panel/refs/heads/main/github-panels-diagram.png" alt="Architecture Diagram" style="max-width: 640px; width: 100%;">
+  <br>
   <p><em>This diagram illustrates the data flow between the API gateway, microservices, and the database layer.</em></p>
 </div>
 
-<br>
 
 ---
 

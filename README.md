@@ -82,8 +82,6 @@ The agent can:
 - Track hashtags and topics of interest (e.g., $BTB)  
 - Engage with users through replies, likes, and threads
 
-![Diagram]()
-
 ### 2. Cryptocurrency Interaction  
 The bot supports basic on-chain actions:
 - Creates and manages an Ethereum wallet  

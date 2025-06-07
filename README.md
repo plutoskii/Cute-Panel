@@ -1,6 +1,6 @@
 <div align="center"> <a name="readme-top"></a>
 
-![9d4dd0f4-c890-4855-8730-471303711523](https://github.com/user-attachments/assets/42c27ddc-4da5-4c64-acff-6a8110aa4db0)
+![9d4dd0f4-c890-4855-8730-471303711523]()
 
 
 <br>
@@ -105,7 +105,7 @@ The codebase is structured for adaptability:
 
 
 <div style="width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
-  <img src="https://raw.githubusercontent.com/KatriaDopex/Cute-Panel/refs/heads/main/github-panels-diagram.png" alt="Architecture Diagram" style="width: 80%;">
+  <img src="" alt="Architecture Diagram" style="width: 80%;">
   <br><br>
   <p><em>This diagram illustrates the data flow between the API gateway, microservices, and the database layer.</em></p>
 </div>

@@ -1,14 +1,14 @@
-import { config as dotenvConfig } from 'dotenv';
+import { config as loadEnv } from 'dotenv';
 import { AgentConfig } from '../types';
 import { logger } from '../utils/logger';
 
-const result = dotenvConfig();
-if (result.error) {
-  logger.error('Error loading .env file:', result.error);
+const envResult = loadEnv();
+if (envResult.error) {
+  logger.error('Failed to load .env file:', envResult.error);
 }
 
-function validateConfig(config: Partial<AgentConfig>): config is AgentConfig {
-  const requiredFields = [
+function isConfigValid(cfg: Partial<AgentConfig>): cfg is AgentConfig {
+  const mandatory = [
     'twitter.apiKey',
     'twitter.apiSecret',
     'twitter.accessToken',
@@ -19,11 +19,11 @@ function validateConfig(config: Partial<AgentConfig>): config is AgentConfig {
     'wallet.rpcUrl'
   ];
 
-  for (const field of requiredFields) {
-    const value = field.split('.').reduce((obj, key) => obj?.[key], config as any);
-    if (!value) {
-      logger.error(`Missing configuration for ${field}. Available env vars:`, process.env);
-      throw new Error(`Missing required configuration: ${field}`);
+  for (const key of mandatory) {
+    const val = key.split('.').reduce((acc, part) => acc?.[part], cfg as any);
+    if (!val) {
+      logger.error(`Config missing required field: ${key}`, process.env);
+      throw new Error(`Required config missing: ${key}`);
     }
   }
 
@@ -31,33 +31,33 @@ function validateConfig(config: Partial<AgentConfig>): config is AgentConfig {
 }
 
 export function loadConfig(): AgentConfig {
-  logger.info('Loading configuration...');
-  logger.debug('Environment variables:', {
+  logger.info('Starting configuration load...');
+  logger.debug('Loaded environment variables:', {
     TWITTER_API_KEY: process.env.TWITTER_API_KEY,
-    TWITTER_BEARER_TOKEN: process.env.TWITTER_BEARER_TOKEN ? '[REDACTED]' : undefined,
-    CLAUDE_API_KEY: process.env.CLAUDE_API_KEY ? '[REDACTED]' : undefined,
-    WALLET_PRIVATE_KEY: process.env.WALLET_PRIVATE_KEY ? '[REDACTED]' : undefined,
+    TWITTER_BEARER_TOKEN: process.env.TWITTER_BEARER_TOKEN ? '***REDACTED***' : undefined,
+    CLAUDE_API_KEY: process.env.CLAUDE_API_KEY ? '***REDACTED***' : undefined,
+    WALLET_PRIVATE_KEY: process.env.WALLET_PRIVATE_KEY ? '***REDACTED***' : undefined,
     ETH_RPC_URL: process.env.ETH_RPC_URL,
   });
 
-  const config: AgentConfig = {
+  const cfg: AgentConfig = {
     twitter: {
-      apiKey: process.env.TWITTER_API_KEY || '',
-      apiSecret: process.env.TWITTER_API_SECRET || '',
-      accessToken: process.env.TWITTER_ACCESS_TOKEN || '',
-      accessTokenSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET || '',
-      bearerToken: process.env.TWITTER_BEARER_TOKEN || '',
+      apiKey: process.env.TWITTER_API_KEY ?? '',
+      apiSecret: process.env.TWITTER_API_SECRET ?? '',
+      accessToken: process.env.TWITTER_ACCESS_TOKEN ?? '',
+      accessTokenSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET ?? '',
+      bearerToken: process.env.TWITTER_BEARER_TOKEN ?? '',
     },
     llm: {
       provider: 'claude',
-      apiKey: process.env.CLAUDE_API_KEY || '',
+      apiKey: process.env.CLAUDE_API_KEY ?? '',
       model: 'claude-3-opus-20240229',
       maxTokens: 1024,
     },
     wallet: {
-      network: process.env.ETH_NETWORK || 'mainnet',
-      rpcUrl: process.env.ETH_RPC_URL || '',
-      privateKey: process.env.WALLET_PRIVATE_KEY || '',
+      network: process.env.ETH_NETWORK ?? 'mainnet',
+      rpcUrl: process.env.ETH_RPC_URL ?? '',
+      privateKey: process.env.WALLET_PRIVATE_KEY ?? '',
     },
     monitoring: {
       enabled: true,
@@ -67,9 +67,9 @@ export function loadConfig(): AgentConfig {
     },
   };
 
-  if (!validateConfig(config)) {
-    throw new Error('Invalid configuration');
+  if (!isConfigValid(cfg)) {
+    throw new Error('Configuration validation failed.');
   }
 
-  return config;
+  return cfg;
 }

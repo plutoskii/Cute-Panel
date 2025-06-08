@@ -58,7 +58,7 @@ export class ClaudeService {
               'anthropic-version': '2023-06-01'
             },
             timeout: 30000, // 30 second timeout
-            proxy: false // Disable any proxy settings that might interfere
+            proxy: false
           }
         );
 

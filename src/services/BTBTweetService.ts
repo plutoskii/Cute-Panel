@@ -4,167 +4,126 @@ import { KnowledgeBaseService } from './KnowledgeBaseService';
 import { logger } from '../utils/logger';
 import { Tweet, RateLimit } from '../types';
 
-export class BTBTweetService {
-  private twitterService: TwitterService;
-  private claudeService: ClaudeService;
-  private knowledgeBaseService: KnowledgeBaseService;
-  private lastProcessedTweetId?: string;
-  private isProcessing: boolean = false;
-  private nextPollTime: Date = new Date();
-  private defaultIntervalMs: number = 60000; // 1 minute default
+export class CutePanelTweetHandler {
+  private twitter: TwitterService;
+  private claude: ClaudeService;
+  private knowledgeBase: KnowledgeBaseService;
+  private lastTweetId?: string;
+  private processing = false;
+  private nextPoll: Date = new Date();
+  private pollIntervalMs = 60000;
 
   constructor(
     twitterService: TwitterService,
     claudeService: ClaudeService,
     knowledgeBaseService: KnowledgeBaseService
   ) {
-    this.twitterService = twitterService;
-    this.claudeService = claudeService;
-    this.knowledgeBaseService = knowledgeBaseService;
+    this.twitter = twitterService;
+    this.claude = claudeService;
+    this.knowledgeBase = knowledgeBaseService;
   }
 
-  private extractQuestion(tweetText: string): string {
-    // Remove $BTB mention, @mentions, and any URLs
-    const cleanText = tweetText
-      .replace(/\$BTB/gi, '')
+  private cleanTweetText(text: string): string {
+    return text
+      .replace(/\$btb/gi, '')
       .replace(/@\w+/g, '')
       .replace(/https?:\/\/\S+/g, '')
       .trim();
-    return cleanText;
   }
 
-  private updateNextPollTime(rateLimit?: RateLimit): void {
-    if (rateLimit?.remaining === 0 && rateLimit?.reset) {
-      // Convert reset timestamp to milliseconds and add 1 second buffer
-      const resetTime = new Date(rateLimit.reset * 1000 + 1000);
-      this.nextPollTime = resetTime;
-      logger.info('Updated next poll time due to rate limit', {
-        nextPoll: this.nextPollTime.toISOString(),
-      });
+  private updatePollingTime(rateLimit?: RateLimit): void {
+    if (rateLimit?.remaining === 0 && rateLimit.reset) {
+      // Add 1 second buffer to reset time
+      this.nextPoll = new Date(rateLimit.reset * 1000 + 1000);
+      logger.info('Rate limit reached, scheduling next poll at', this.nextPoll.toISOString());
     } else {
-      // Use default interval if no rate limit info
-      this.nextPollTime = new Date(Date.now() + this.defaultIntervalMs);
+      this.nextPoll = new Date(Date.now() + this.pollIntervalMs);
     }
   }
 
-  private async sleep(ms: number): Promise<void> {
+  private wait(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  async processBTBTweets(): Promise<void> {
-    if (this.isProcessing) {
-      logger.info('Already processing tweets, skipping...');
+  async handleBTBTweets(): Promise<void> {
+    if (this.processing) {
+      logger.info('Already processing tweets — skipping this cycle');
       return;
     }
 
+    this.processing = true;
     try {
-      this.isProcessing = true;
-      logger.info('Processing $BTB tweets...', { lastProcessedTweetId: this.lastProcessedTweetId });
+      logger.info('Fetching $BTB mentions...', { lastTweetId: this.lastTweetId });
 
-      // Get mentions since last processed tweet
-      const { mentions, rateLimit } = await this.twitterService.getMentionsWithRateLimit(this.lastProcessedTweetId);
-      
-      // Update next poll time based on rate limit info
-      this.updateNextPollTime(rateLimit);
+      const { mentions, rateLimit } = await this.twitter.getMentionsWithRateLimit(this.lastTweetId);
+      this.updatePollingTime(rateLimit);
 
-      // Filter for tweets containing $BTB
-      const btbTweets = mentions.filter((tweet: Tweet) => 
+      const filteredTweets = mentions.filter(tweet =>
         tweet.text.toLowerCase().includes('$btb')
       );
 
-      logger.info(`Found ${btbTweets.length} $BTB tweets to process`);
+      logger.info(`Found ${filteredTweets.length} $BTB tweets to process`);
 
-      // Process each tweet
-      for (const tweet of btbTweets) {
+      for (const tweet of filteredTweets) {
+        if (this.lastTweetId && tweet.id <= this.lastTweetId) continue;
+
         try {
-          // Skip if we've already processed this tweet
-          if (this.lastProcessedTweetId && tweet.id <= this.lastProcessedTweetId) {
-            continue;
-          }
-
-          // Extract the question from the tweet
-          const question = this.extractQuestion(tweet.text);
-          
+          const question = this.cleanTweetText(tweet.text);
           if (!question) {
-            logger.info('No question found in tweet, skipping', { tweetId: tweet.id });
+            logger.info('No valid question found — skipping tweet', { tweetId: tweet.id });
             continue;
           }
 
-          // Get knowledge base context
-          const prompt = await this.knowledgeBaseService.searchKnowledge(question);
+          const context = await this.knowledgeBase.searchKnowledge(question);
+          const aiResponse = await this.claude.getResponse(context);
+          const reply = this.truncateForTwitter(aiResponse);
 
-          // Get Claude's response
-          const claudeResponse = await this.claudeService.getResponse(prompt);
+          await this.twitter.replyToTweet(reply, tweet.id);
+          logger.info('Replied successfully', { tweetId: tweet.id });
 
-          // Format the response to fit Twitter's character limit
-          const formattedResponse = this.formatTwitterResponse(claudeResponse);
+          this.lastTweetId = tweet.id;
 
-          // Reply to the tweet
-          await this.twitterService.replyToTweet(formattedResponse, tweet.id);
-
-          logger.info('Successfully processed tweet', { tweetId: tweet.id });
-          
-          // Update last processed tweet ID
-          this.lastProcessedTweetId = tweet.id;
-
-          // Add a small delay between processing tweets to avoid rate limits
-          await this.sleep(1000);
-        } catch (error) {
-          logger.error('Failed to process tweet:', error, { tweetId: tweet.id });
-          // Continue processing other tweets even if one fails
-          continue;
+          await this.wait(1000); // small pause to avoid hitting rate limits
+        } catch (err) {
+          logger.error('Error processing tweet', { tweetId: tweet.id, error: err });
         }
       }
-    } catch (error: any) {
-      logger.error('Failed to process $BTB tweets:', error);
-      // Update next poll time if we hit a rate limit
-      if (error?.rateLimit) {
-        this.updateNextPollTime(error.rateLimit);
+    } catch (err) {
+      logger.error('Error fetching or processing tweets', err);
+      if ((err as any)?.rateLimit) {
+        this.updatePollingTime((err as any).rateLimit);
       }
     } finally {
-      this.isProcessing = false;
+      this.processing = false;
     }
   }
 
-  private formatTwitterResponse(response: string): string {
-    // Twitter's character limit is 280
-    const MAX_LENGTH = 280;
-    
-    if (response.length <= MAX_LENGTH) {
-      return response;
-    }
-
-    // If response is too long, truncate it and add an ellipsis
-    return response.substring(0, MAX_LENGTH - 3) + '...';
+  private truncateForTwitter(text: string): string {
+    const maxLen = 280;
+    if (text.length <= maxLen) return text;
+    return text.slice(0, maxLen - 3) + '...';
   }
 
-  // Start processing tweets at regular intervals
-  async startProcessing(intervalMs: number = 300000): Promise<void> { // Default to 5 minutes for testing
-    this.defaultIntervalMs = intervalMs;
-    logger.info('Starting $BTB tweet processing...', { intervalMs });
-    
-    // Initial processing
-    await this.processBTBTweets();
+  async start(intervalMs = 300000): Promise<void> {
+    this.pollIntervalMs = intervalMs;
+    logger.info('Starting $BTB tweet handler', { intervalMs });
 
-    // Set up interval for continuous processing
+    await this.handleBTBTweets();
+
     while (true) {
       try {
-        const now = new Date();
-        const timeUntilNextPoll = Math.max(0, this.nextPollTime.getTime() - now.getTime());
+        const now = Date.now();
+        const delay = Math.max(0, this.nextPoll.getTime() - now);
 
-        if (timeUntilNextPoll > 0) {
-          logger.info('Waiting for next poll...', {
-            timeUntilNextPoll,
-            nextPollTime: this.nextPollTime.toISOString(),
-          });
-          await this.sleep(timeUntilNextPoll);
+        if (delay > 0) {
+          logger.info('Waiting before next poll', { delayMs: delay, nextPoll: this.nextPoll.toISOString() });
+          await this.wait(delay);
         }
 
-        await this.processBTBTweets();
+        await this.handleBTBTweets();
       } catch (error) {
-        logger.error('Error in processing interval:', error);
-        // Wait for the default interval before retrying
-        await this.sleep(this.defaultIntervalMs);
+        logger.error('Error in polling loop', error);
+        await this.wait(this.pollIntervalMs);
       }
     }
   }

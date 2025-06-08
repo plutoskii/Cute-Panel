@@ -1,8 +1,9 @@
-import { TwitterService } from './TwitterService';
 import { ClaudeService } from './ClaudeService';
 import { KnowledgeBaseService } from './KnowledgeBaseService';
+import { TwitterService } from './TwitterService';
 import { logger } from '../utils/logger';
-import { Tweet, RateLimit } from '../types';
+import { RateLimit, Tweet } from '../types';
+
 
 export class BTBTweetService {
   private twitterService: TwitterService;
@@ -35,12 +36,13 @@ export class BTBTweetService {
 
   private updateNextPollTime(rateLimit?: RateLimit): void {
     if (rateLimit?.remaining === 0 && rateLimit?.reset) {
-      // Convert reset timestamp to milliseconds and add 1 second buffer
+      // Convert reset timestamp to milliseconds and  1 second buffer
       const resetTime = new Date(rateLimit.reset * 1000 + 1000);
       this.nextPollTime = resetTime;
-      logger.info('Updated next poll time due to rate limit', {
-        nextPoll: this.nextPollTime.toISOString(),
-      });
+    logger.info('Rate limit hit. Next poll scheduled at:', {
+        nextPollISO: this.nextPollTime.toISOString(),
+    });
+
     } else {
       // Use default interval if no rate limit info
       this.nextPollTime = new Date(Date.now() + this.defaultIntervalMs);
@@ -107,7 +109,7 @@ export class BTBTweetService {
           // Update last processed tweet ID
           this.lastProcessedTweetId = tweet.id;
 
-          // Add a small delay between processing tweets to avoid rate limits
+          //  a small delay between processing tweets to avoid rate limits
           await this.sleep(1000);
         } catch (error) {
           logger.error('Failed to process tweet:', error, { tweetId: tweet.id });
@@ -134,7 +136,8 @@ export class BTBTweetService {
       return response;
     }
 
-    // If response is too long, truncate it and add an ellipsis
+  // If response exceeds Twitter's 280 character limit, truncate and append "..."
+
     return response.substring(0, MAX_LENGTH - 3) + '...';
   }
 

@@ -2,8 +2,8 @@
 
 Thank you for considering contributing to **Cute Panel**. We’re thrilled to have your support. Whether you're here to:
 
-- Report an issue
 - Propose an idea
+- Report an issue
 - Submit bug fixes or features
 - Help with testing and docs
 - Just explore the code

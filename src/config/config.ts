@@ -7,6 +7,10 @@ if (envResult.error) {
   logger.error('Failed to load .env file:', envResult.error);
 }
 
+function getNestedValue(obj: any, path: string): any {
+  return path.split('.').reduce((acc, part) => acc?.[part], obj);
+}
+
 function isConfigValid(cfg: Partial<AgentConfig>): cfg is AgentConfig {
   const mandatory = [
     'twitter.apiKey',
@@ -20,7 +24,7 @@ function isConfigValid(cfg: Partial<AgentConfig>): cfg is AgentConfig {
   ];
 
   for (const key of mandatory) {
-    const val = key.split('.').reduce((acc, part) => acc?.[part], cfg as any);
+    const val = getNestedValue(cfg, key);
     if (!val) {
       logger.error(`Config missing required field: ${key}`, process.env);
       throw new Error(`Required config missing: ${key}`);

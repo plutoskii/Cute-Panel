@@ -1,137 +1,160 @@
-# Contributing to Autonomous AI Agent
+# Contributing to Cute Panel
 
-We love your input! We want to make contributing to Autonomous AI Agent as easy and transparent as possible, whether it's:
+Thank you for considering contributing to **Cute Panel**. We’re thrilled to have your support. Whether you're here to:
 
-- Reporting a bug
-- Discussing the current state of the code
-- Submitting a fix
-- Proposing new features
-- Becoming a maintainer
+- Report an issue
+- Propose an idea
+- Submit bug fixes or features
+- Help with testing and docs
+- Just explore the code
 
-## Development Process
+You're welcome here.
 
-We use GitHub to host code, to track issues and feature requests, as well as accept pull requests.
+---
 
-1. Fork the repo and create your branch from `main`
-2. Install dependencies with `npm install`
-3. If you've added code that should be tested, add tests
-4. If you've changed APIs, update the documentation
-5. Ensure the test suite passes
-6. Make sure your code follows our TypeScript style guide
-7. Issue that pull request!
+## Quickstart for Development
 
-## Code Style and Standards
+To get your local environment set up:
 
-### TypeScript Guidelines
-- Use TypeScript's strict mode (enabled in tsconfig.json)
-- Properly type all variables, parameters, and return values
-- Use interfaces for object shapes
-- Leverage TypeScript's type system to prevent runtime errors
+1. Fork the repo and clone it locally
+2. Ensure you're running Node.js v16 or later
+3. Install project dependencies:
 
-### Code Quality
-- Use ESLint for code linting
-- Format code with Prettier
-- Maintain comprehensive JSDoc documentation
-- Write unit tests using Jest
-- Follow async/await patterns for asynchronous code
-- Use meaningful variable and function names
-
-### Best Practices
-- Follow SOLID principles
-- Write modular and reusable code
-- Keep functions small and focused
-- Use dependency injection where appropriate
-- Handle errors properly with try/catch
-- Use environment variables for configuration
-
-## Development Setup
-
-1. Install Node.js (v16 or later)
-2. Clone the repository
-3. Install dependencies:
    ```bash
    npm install
    ```
-4. Copy `.env.example` to `.env` and configure
-5. Start development server:
+
+4. Duplicate `.env.example` as `.env` and configure it as needed
+5. Start the development server:
+
    ```bash
    npm run dev
    ```
 
+---
+
+## How Contributions Work
+
+We use GitHub for version control, issues, and pull requests. To contribute:
+
+1. Create a new branch from `main`
+2. Commit your changes with clear messages
+3. Push to your fork and open a pull request
+4. Describe what your PR does and reference any related issues
+
+---
+
 ## Testing
 
-- Write tests using Jest
-- Place tests in `__tests__` directories or with `.test.ts` extension
+We use **Jest** for testing. Please:
+
+- Write unit tests for new features or logic
+- Use `__tests__` folders or `.test.ts` files
 - Run tests with:
+
   ```bash
   npm test
   ```
-- Aim for good test coverage
-- Include unit tests for new features
-- Add integration tests for API endpoints
 
-## Pull Request Process
+- Ensure your code passes tests before submitting a PR
 
-1. Update the README.md with details of changes to the interface
-2. Update any relevant documentation
-3. Add or update tests as needed
-4. Update `package.json` if adding dependencies
-5. The PR will be merged once you have the sign-off of at least one maintainer
+---
 
-## Any contributions you make will be under the MIT License
-When you submit code changes, your submissions are understood to be under the same [MIT License](LICENSE) that covers the project. Feel free to contact the maintainers if that's a concern.
+## Code Style & Best Practices
 
-## Report bugs using GitHub's [issue tracker](https://github.com/btb-finance/Autonomous-AI-Agent/issues)
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/btb-finance/Autonomous-AI-Agent/issues/new).
+### TypeScript
 
-## Write bug reports with detail, background, and sample code
+- Use strict mode (enabled in `tsconfig.json`)
+- Add types for all variables, parameters, and return values
+- Prefer interfaces for object shapes
 
-**Great Bug Reports** tend to have:
+### Code Quality
 
-- A quick summary and/or background
-- Steps to reproduce
-  - Be specific!
-  - Give sample code if you can
-- What you expected would happen
-- What actually happens
-- Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
+- Lint with **ESLint**
+- Format with **Prettier**
+- Add meaningful JSDoc where appropriate
+- Use clear variable/function names
+- Write small, modular functions
+- Favor `async/await` over `.then()`
+- Handle errors using `try/catch`
+- Store config in environment variables
 
-## Priority Areas for Contribution
+---
 
-We particularly need help with:
-- Enhanced conversation strategies
-- Additional social media platform integrations
-- Improved security measures
-- Testing and documentation
-- UI/UX for monitoring and configuration
+## Pull Request Guidelines
 
-## Code Review Process
+Before submitting a PR:
 
-1. All code changes happen through pull requests
-2. Pull requests are reviewed by at least one maintainer
-3. Reviews focus on:
-   - Code quality and style
-   - Type safety
-   - Test coverage
-   - Documentation
-   - Security considerations
+1. Make sure tests pass
+2. Follow the code style guidelines
+3. Update documentation if needed
+4. Add or adjust tests
+5. Document any new dependencies
 
-## Setting Up Development Environment
+PRs are reviewed by maintainers before merging.
 
-1. Fork and clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Set up your IDE:
-   - Enable TypeScript support
-   - Install ESLint extension
-   - Install Prettier extension
-   - Configure auto-formatting on save
-4. Create your feature branch:
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
+---
+
+## Reporting Issues
+
+To report bugs, use GitHub's issue tracker:
+
+- Open a new issue at: [github.com/KatriaDopex/Cute-Panel/issues](https://github.com/KatriaDopex/Cute-Panel/issues)
+- Include a clear summary and steps to reproduce
+- Describe expected vs. actual behavior
+- Add logs, screenshots, or code if helpful
+
+---
+
+## High-Impact Contribution Areas
+
+We’d especially love help with:
+
+- Better interaction flow logic
+- Expanding platform integrations
+- Strengthening app security
+- Improving UI/UX polish
+- Writing and improving documentation
+- Test coverage and reliability
+
+---
+
+## Code Review Workflow
+
+Every contribution goes through a review process:
+
+- Open a pull request
+- A maintainer (like [@KatriaDopex](https://github.com/KatriaDopex)) will review your changes
+- We check:
+  - Clarity and readability
+  - Type safety and correctness
+  - Test completeness
+  - Documentation updates
+  - Potential bugs or security concerns
+
+---
+
+## Editor & IDE Setup
+
+To work smoothly:
+
+- Enable TypeScript support
+- Install ESLint and Prettier plugins
+- Format on save
+- Use a consistent branch naming pattern:
+
+  ```bash
+  git checkout -b feature/your-feature-name
+  ```
+
+---
 
 ## License
-By contributing, you agree that your contributions will be licensed under its MIT License.
+
+All contributions are made under the [MIT License](LICENSE). By submitting your code, you agree to license it under MIT.
+
+---
+
+Need help or want to chat? Reach out via [Telegram @getwickedwit](https://t.me/getwickedwit) or on GitHub at [@KatriaDopex](https://github.com/KatriaDopex).
+
+thanks for all the current and future contributors for making cute panels a thing!

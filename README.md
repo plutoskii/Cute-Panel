@@ -1,6 +1,7 @@
 <div align="center"> <a name="readme-top"></a>
 
-![CutePanel Banner][cutepanel-banner]
+![Cute-Panel-Banner](https://i.imgur.com/meFmf2U.png)
+
 
 <br>
 
@@ -11,7 +12,6 @@
 [![Release](https://img.shields.io/github/v/release/KatriaDopex/Cute-Panel?style=flat-square&color=ffffff&labelColor=ffffff)](https://github.com/KatriaDopex/Cute-Panel/releases/latest)
 [![Release Date](https://img.shields.io/github/release-date/KatriaDopex/Cute-Panel?style=flat-square&color=ffffff&labelColor=ffffff)](https://github.com/KatriaDopex/Cute-Panel/releases/latest)
 [![License](https://img.shields.io/github/license/KatriaDopex/Cute-Panel?style=flat-square&color=0078d7&labelColor=ffffff)](https://github.com/KatriaDopex/Cute-Panel/blob/main/LICENSE)
-[![Issues](https://img.shields.io/github/issues/KatriaDopex/Cute-Panel?style=flat-square&color=ffffff&labelColor=ffffff)](https://github.com/KatriaDopex/Cute-Panel/issues)
 
 <a href="https://github.com/katriadopex/cute-panel/blob/main/README.md"><img alt="README in English" src="https://img.shields.io/badge/English-lightgrey"></a>
 <a href="https://github.com/katriadopex/cute-panel/blob/main/docs/README-CN.md"><img alt="简体中文操作指南" src="https://img.shields.io/badge/简体中文-lightgrey"></a>
@@ -62,11 +62,9 @@ The project is developed in **TypeScript** for its reliability, strong typing, a
 
 <br>
 
-> \[!IMPORTANT]
->
 > **Star Cute-Panel Repositories** ⭐️
 >
-> Get instant notifications for new releases and updates. Your support helps us grow and improve TEN!
+> Get instant notifications for new releases and updates. Your support helps us scale and improve Cute-Panel!
 
 <br>
 
@@ -80,7 +78,7 @@ The agent can:
 - Post original tweets based on prompt-driven logic  
 - Reply with context-aware responses using an integrated LLM (Claude)  
 - Track hashtags and topics of interest (e.g., $BTB)  
-- Engage with users through replies, likes, and threads  
+- Engage with users through replies, likes, and threads
 
 ### 2. Cryptocurrency Interaction  
 The bot supports basic on-chain actions:
@@ -98,6 +96,18 @@ The codebase is structured for adaptability:
 - Easily extendable to additional platforms  
 - Designed for external contributions and modular development  
 - Can integrate with multiple chains and token types
+
+---
+
+<h2>Architecture Diagram</h2>
+
+
+<div style="width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+  <img src="https://i.imgur.com/g64Pbyp.png" alt="Architecture Diagram" style="width: 100%;">
+  <br><br>
+  <p><em>This diagram illustrates the data flow between the API gateway, microservices, and the database layer.</em></p>
+</div>
+
 
 ---
 

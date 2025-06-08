@@ -1,73 +1,75 @@
-export interface Tweet {
+// Defines Twitter-related data structures and app configuration types
+
+export interface TweetData {
   readonly id: string;
-  readonly text: string;
+  readonly content: string;
   readonly authorId: string;
-  readonly createdAt: Date;
+  readonly timestamp: Date;
   readonly conversationId?: string;
   readonly referencedTweets?: {
-    readonly type: 'replied_to' | 'quoted' | 'retweeted';
-    readonly id: string;
+    readonly relation: 'replied_to' | 'quoted' | 'retweeted';
+    readonly tweetId: string;
   }[];
 }
 
-export interface User {
+export interface TwitterUser {
   readonly id: string;
   readonly username: string;
-  readonly name: string;
-  readonly description?: string;
-  readonly metrics?: {
-    readonly followersCount: number;
-    readonly followingCount: number;
-    readonly tweetCount: number;
+  readonly displayName: string;
+  readonly bio?: string;
+  readonly stats?: {
+    readonly followers: number;
+    readonly following: number;
+    readonly totalTweets: number;
   };
 }
 
-export interface RateLimit {
-  readonly limit: number;
-  readonly remaining: number;
-  readonly reset: number;
+export interface RateLimitInfo {
+  readonly maxCalls: number;
+  readonly remainingCalls: number;
+  readonly resetEpochSeconds: number;
 }
 
-export interface TwitterResponse {
-  readonly mentions: Tweet[];
-  readonly rateLimit: RateLimit;
+export interface TwitterApiResponse {
+  readonly mentions: TweetData[];
+  readonly rateLimit: RateLimitInfo;
 }
 
-export interface WalletTransaction {
+export interface BlockchainTransaction {
   readonly id?: string;
-  readonly hash: string;
-  readonly from: string;
-  readonly to: string;
-  readonly value: string;
-  readonly amount?: string;
-  readonly currency?: string;
-  readonly timestamp: Date;
+  readonly transactionHash: string;
+  readonly sender: string;
+  readonly receiver: string;
+  readonly amountRaw: string;
+  readonly amountFormatted?: string;
+  readonly currencySymbol?: string;
+  readonly date: Date;
   readonly status?: 'pending' | 'confirmed' | 'failed' | 'completed';
 }
 
-export interface AgentConfig {
+export interface AppConfig {
   readonly twitter: {
     readonly apiKey: string;
-    readonly apiSecret: string;
+    readonly apiSecretKey: string;
     readonly accessToken: string;
     readonly accessTokenSecret: string;
     readonly bearerToken: string;
   };
-  readonly llm: {
+  readonly languageModel: {
     readonly apiKey: string;
-    readonly model: string;
+    readonly modelName: string;
     readonly maxTokens: number;
     readonly provider?: string;
   };
   readonly wallet: {
     readonly privateKey: string;
-    readonly rpcUrl: string;
-    readonly network?: string;
+    readonly rpcEndpoint: string;
+    readonly networkName?: string;
   };
   readonly monitoring?: {
     readonly enabled: boolean;
-    readonly interval: number;
+    readonly pollingIntervalMs: number;
     readonly logLevel?: 'debug' | 'info' | 'warn' | 'error';
-    readonly enableMetrics?: boolean;
+    readonly metricsEnabled?: boolean;
   };
 }

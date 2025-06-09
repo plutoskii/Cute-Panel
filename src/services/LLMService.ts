@@ -48,28 +48,27 @@ export class LLMService {
     }
   }
 
-  private constructPrompt(
-    message: string,
-    context: string[],
-    systemPrompt?: string
-  ): string {
-    let prompt = '';
+private constructPrompt(
+  message: string,
+  context: string[],
+  systemPrompt?: string
+): string {
+  const parts: string[] = [];
 
-    if (systemPrompt) {
-      prompt += `System: ${systemPrompt}\n\n`;
-    }
-
-    if (context.length > 0) {
-      prompt += 'Previous conversation:\n';
-      prompt += context.join('\n');
-      prompt += '\n\n';
-    }
-
-    prompt += `Current message: ${message}\n`;
-    prompt += 'Please provide a helpful and engaging response.';
-
-    return prompt;
+  if (systemPrompt) {
+    parts.push(`System: ${systemPrompt}\n`);
   }
+
+  if (context.length > 0) {
+    parts.push('Previous conversation:\n' + context.join('\n') + '\n');
+  }
+
+  parts.push(`Current message: ${message}`);
+  parts.push('Please provide a helpful and engaging response.');
+
+  return parts.join('\n\n');
+}
+
 
   async generateThreadSummary(tweets: string[]): Promise<string> {
     try {
